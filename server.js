@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser'); // Add this line
 const logger = require('./logger'); // Adjust the path as needed
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Add this line
+const stripe = require('stripe')('sk_test_51NjyTTLWuSm1CyQDFfJMmRoXUPyWFbBUeSSkcNERcgDjQgNsUlhhPnz7kw4nzhj9VxlRwGSWFouyBVOF6BK7HBub00gdQGjrct');
 
 const app = express();
 const port = 3000;
@@ -40,22 +40,27 @@ app.get('/products', (req, res) => {
 });
 
 // Payment handling route
-app.post('/create-payment-intent', async (req, res) => {
+app.post('/create-checkout-session', async (req, res) => {
     try {
-        const { items } = req.body; // Assuming you're sending product details in the request body
-        // Calculate total amount based on items
-
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: calculateTotalAmount(items), // Replace with your logic
-            currency: 'usd', // Replace with your desired currency
+        const session = await stripe.checkout.sessions.create({
+            line_items: [
+                {
+                    price: 'price_1Nk06mLWuSm1CyQDSzbEvhtQ', // Replace with your actual price ID
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: `${req.headers.origin}/?success=true`,
+            cancel_url: `${req.headers.origin}/?canceled=true`,
         });
 
-        res.status(200).json({ clientSecret: paymentIntent.client_secret });
+        res.json({ redirectUrl: session.url });
     } catch (error) {
-        console.error('Error creating payment intent:', error.message);
+        console.error('Error creating checkout session:', error.message);
         res.status(500).json({ error: 'An error occurred while processing your request.' });
     }
 });
+
 
 // Helper function to calculate total amount based on items
 function calculateTotalAmount(items) {
