@@ -4,7 +4,15 @@ const bodyParser = require('body-parser'); // Add this line
 const logger = require('./logger'); // Adjust the path as needed
 const stripe = require('stripe')('sk_test_51NjyTTLWuSm1CyQDFfJMmRoXUPyWFbBUeSSkcNERcgDjQgNsUlhhPnz7kw4nzhj9VxlRwGSWFouyBVOF6BK7HBub00gdQGjrct');
 
+const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
 const app = express();
+// other app.use() options ...
+app.use(expressCspHeader({ 
+    policies: { 
+        'default-src': [expressCspHeader.NONE], 
+        'img-src': [expressCspHeader.SELF], 
+    } 
+}));  
 const port = 3000;
 
 app.set('view engine', 'ejs');
@@ -20,9 +28,18 @@ app.use((req, res, next) => {
 });
 
 // Homepage route
+// Payment success route
 app.get('/', (req, res) => {
-    res.render('index');
+    if (req.query.success === 'true') {
+        res.render('success');
+    } else if (req.query.canceled === 'true') {
+        res.render('cancel');
+    } else {
+        // Handle other cases or show a default page
+        res.render('index');
+    }
 });
+
 
 // About page route
 app.get('/about', (req, res) => {
@@ -54,7 +71,8 @@ app.post('/create-checkout-session', async (req, res) => {
             cancel_url: `${req.headers.origin}/?canceled=true`,
         });
 
-        res.json({ redirectUrl: session.url });
+        // Render the checkout-page.ejs template with the redirectUrl
+        res.render('checkout-page', { redirectUrl: session.url });
     } catch (error) {
         console.error('Error creating checkout session:', error.message);
         res.status(500).json({ error: 'An error occurred while processing your request.' });

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect to Checkout</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Additional styles specific to the checkout page */
+        /* You can customize these styles as needed */
+        .checkout-container {
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .checkout-container h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-container p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .checkout-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-button:hover {
+            background-color: #ff3d3d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">TouchedByLyn</div>
+            <ul class="menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="checkout-container">
+        <h1>Redirect to Checkout</h1>
+        <p>Click the button below to proceed to checkout:</p>
+        <a href="<%= redirectUrl %>" class="checkout-button">Proceed to Checkout</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 TouchedByLyn. All rights reserved.</p>
+    </footer>
+</body>
+</html>
