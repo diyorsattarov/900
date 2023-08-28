@@ -111,3 +111,29 @@ footer {
 .product p {
     margin: 5px 0;
 }
+
+
+.contact-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 300px); /* Adjust the value as needed */
+}
+
+.contact-form form {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form label,
+.contact-form input,
+.contact-form textarea,
+.contact-form button {
+    width: 100%;
+    margin-bottom: 10px;
+}
