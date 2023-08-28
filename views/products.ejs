@@ -17,11 +17,9 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <section class="products">
             <h1>Featured Products</h1>
-            
             <div class="product">
                 <img src="/images/product1.jpg" alt="Product 1">
                 <h2>Product 1</h2>
@@ -32,7 +30,6 @@
                     <button type="submit" class="btn">Buy Now</button>
                 </form>
             </div>
-            
             <div class="product">
                 <img src="/images/product2.jpg" alt="Product 2">
                 <h2>Product 2</h2>
@@ -43,47 +40,49 @@
                     <button type="submit" class="btn">Buy Now</button>
                 </form>
             </div>
-            
-            
-            <!-- Add more product entries as needed -->
-            
         </section>
     </main>
-
     <footer>
         <p>&copy; 2023. All rights reserved.</p>
     </footer>
-    <script src="https://js.stripe.com/v3/">
-        const stripe = Stripe('pk_test_51NjyTTLWuSm1CyQDuCaoJMXck6i1Za9cmTFa3h2kMMuvs6qomV07MwqI1hwMJBjjpIrR4NuQ5SXBa2etPQfqUg5i00of5KU9qC');
-    
-        document.addEventListener('DOMContentLoaded', () => {
-        const buyButtons = document.querySelectorAll('.btn');
-
-        buyButtons.forEach(button => {
-            button.addEventListener('click', async event => {
-                event.preventDefault(); // Prevent the default form submission behavior
-
-                const form = button.closest('form');
-                const priceId = form.querySelector('[name="priceId"]').value;
-
-                // Call your server endpoint to create a checkout session
-                const response = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ priceId }), // Send the price ID to the server
-                });
-
+        <script src="https://js.stripe.com/v3/">
+            document.addEventListener('DOMContentLoaded', async () => {
+                const response = await fetch('/get-stripe-key');
                 const data = await response.json();
-                console.log(data); // Print the response data to the console
-
-                // Redirect to the checkout page
-                window.location.href = data.redirectUrl; // Redirect the user to the checkout URL
+        
+                const stripe = Stripe(data.publishableKey);
+        
+                const buyButtons = document.querySelectorAll('.btn');
+        
+                buyButtons.forEach(button => {
+                    button.addEventListener('click', async event => {
+                        event.preventDefault();
+        
+                        const form = button.closest('form');
+                        const priceId = form.querySelector('[name="priceId"]').value;
+        
+                        const sessionResponse = await fetch('/create-checkout-session', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ priceId }),
+                        });
+        
+                        const sessionData = await sessionResponse.json();
+        
+                        const { sessionId } = sessionData;
+        
+                        const { error } = await stripe.redirectToCheckout({
+                            sessionId: sessionId,
+                        });
+        
+                        if (error) {
+                            console.error('Error redirecting to checkout:', error);
+                        }
+                    });
+                });
             });
-        });
-    });
-    </script>
-    
+        </script>    
 </body>
 </html>

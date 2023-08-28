@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const logger = require('./logger'); 
-const stripe = require('stripe')('sk_test_51NjyTTLWuSm1CyQDFfJMmRoXUPyWFbBUeSSkcNERcgDjQgNsUlhhPnz7kw4nzhj9VxlRwGSWFouyBVOF6BK7HBub00gdQGjrct');
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = 3000;
@@ -26,6 +27,11 @@ app.get('/', (req, res) => {
     } else {
         res.render('index');
     }
+});
+
+app.get('/get-stripe-key', (req, res) => {
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    res.json({ publishableKey });
 });
 
 app.get('/about', (req, res) => {
