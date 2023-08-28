@@ -14,16 +14,16 @@ Welcome to your web app! This app is designed to showcase and sell various produ
 1. Clone this repository to your local machine.
 2. Install Node.js and npm if not already installed.
 3. Navigate to the project directory and run the following command to install dependencies:
-
+```
 npm install
 
 markdown
-
+```
 
 4. Create a `.env` file in the project directory and add your Stripe API secret key:
-
+```
 STRIPE_SECRET_KEY=your_stripe_secret_key
-
+```
 bash
 
 
@@ -31,10 +31,11 @@ bash
 
 1. Run the following command to start the development server:
 
+```
 npm start
 
 markdown
-
+```
 
 2. Open your web browser and navigate to `http://localhost:3000` to access the app.
 
