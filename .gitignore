@@ -24,4 +24,4 @@ yarn.lock
 *.sln
 *.sw*
 
-.env
+*.env

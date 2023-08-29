@@ -15,26 +15,31 @@ Welcome to your web app! This app is designed to showcase and sell various produ
 2. Install Node.js and npm if not already installed.
 3. Navigate to the project directory and run the following command to install dependencies:
 ```
-npm install
-
-markdown
+npm install express stripe ejs body-parser dotenv winston
 ```
+
+## Dependencies
+
+- Express.js: Web application framework for routing and middleware.
+- Stripe: Library for integrating with the Stripe API.
+- EJS: Templating engine for rendering dynamic content.
+- Body Parser: Middleware for parsing JSON and form data.
+- dotenv: Load environment variables from `.env` file into `process.env`.
+- winston: A logging library for Node.js
+
 
 4. Create a `.env` file in the project directory and add your Stripe API secret key:
 ```
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
 ```
-bash
-
 
 ## Usage
 
 1. Run the following command to start the development server:
 
 ```
-npm start
-
-markdown
+node server.js
 ```
 
 2. Open your web browser and navigate to `http://localhost:3000` to access the app.
@@ -44,14 +49,6 @@ markdown
 - `static/`: Contains static assets such as images and stylesheets.
 - `views/`: Contains EJS templates for rendering different pages.
 - `server.js`: Main server file that defines routes and handles requests.
-
-## Dependencies
-
-- Express.js: Web application framework for routing and middleware.
-- Stripe: Library for integrating with the Stripe API.
-- EJS: Templating engine for rendering dynamic content.
-- Body Parser: Middleware for parsing JSON and form data.
-- ...
 
 ## Contributing
 
