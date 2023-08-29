@@ -137,3 +137,36 @@ footer {
     width: 100%;
     margin-bottom: 10px;
 }
+
+/* Additional styles specific to the checkout page */
+/* You can customize these styles as needed */
+.checkout-container {
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.checkout-container h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.checkout-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.checkout-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: #ff6b6b;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #ff3d3d;
+}
